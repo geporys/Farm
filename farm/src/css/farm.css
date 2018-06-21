@@ -1,0 +1,173 @@
+html, body{
+    margin:0;
+    padding: 0;
+}
+table{
+    width: 1000px;
+    margin: 0 auto;
+
+}
+th{
+    height: 40px;
+    background: #F0F8FF;
+}
+tr{
+   height:35px;
+text-align: center;
+}
+tr:hover{
+    background: rgb(246, 249, 252); 
+}
+#footerTable{
+    padding: 10px;
+    margin: 0 auto;
+    height: 30px;
+    width:980px;
+    background: #F0F8FF;   
+}
+.backgroundPassport{
+    z-index:9000;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height:100%;
+    background-color:grey;
+    opacity: 0.3;
+}
+.passport-container{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height:100%;
+        z-index: 9001;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+.passport{
+padding: 30px;
+border:5px solid #F0F8FF;
+    background-color: white;
+    width: 450px;
+    height:450px;
+}
+#idCow{
+    font-size: 13px;
+    color:#9c9c9c;
+}
+.passport span{
+    font-weight: 600;
+}
+.passport div{
+    padding: 10px;
+}
+#graph{
+    margin-left:-60px; 
+    width: 480px;
+    height: 220px;
+}
+.dataCow{
+    margin-top:-30px;
+}
+.datB button{
+    margin-top:5px; 
+    height:21px;
+    padding: 2px;
+    margin-left:10px;
+    width: 80px;
+
+}
+.add{
+    float: right;
+}
+
+
+.add button{
+    border-radius: 30px;
+    background: red;
+   font-size: 18px; 
+     outline:none;
+     text-decoration: none;
+}
+.form{
+display: none;
+margin-left:10px;
+margin-top:100px;
+border:5px solid #F0F8FF;
+padding: 30px;
+    background: white;
+    height:300px;
+    width:250px;
+}
+.form div{
+    margin-top:25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+.form div input{
+    width: 30px;
+    border: 2px solid #dadada;
+    height: 25px;
+    padding: 2px 2px;
+}
+.form button, .windowCow button{
+    margin-top:40px;
+    float: right;
+    display:flex;
+    align-self: flex-end;
+    height:30px;
+}
+.endCow{
+    margin: -20px;
+    float: right;
+    color:red;
+    height:30px;
+    width: 30px;
+    font-size:25px;
+}
+.windowCow{
+    border:5px solid #F0F8FF;
+padding: 30px;
+    background: white;
+    height:300px;
+    width:400px;
+}
+.windowCow div{
+    margin-top:25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+@media(max-width:1000px){
+    table{
+        width:100%;
+    }
+    #footerTable{
+        width:100%;
+    }
+    .add{
+        margin-right: 20px;
+    }
+    .passport{
+        width: 70%;
+        height: auto;
+    }
+    #graph{
+        width: 100%;
+    }
+    .windowCow{
+        width:70%;
+        height: auto;
+        
+    }
+    .windowCow div{
+        flex-wrap: wrap;
+    }
+    .passport-container{
+        flex-wrap: wrap;
+    }
+    .form{height: auto; margin-top:-10px; }
+}
