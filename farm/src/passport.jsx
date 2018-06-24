@@ -1,7 +1,8 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import exit from './img/X.png';
-
+import minus from './img/minus.png';
+import ReactDOM from 'react-dom';
 class Passport extends React.Component{
     constructor(props){
         super(props);
@@ -12,16 +13,20 @@ class Passport extends React.Component{
             breed:props.cow.breed,
             color:props.cow.color,
             DOB:props.cow.DOB,
-            data: props.cow
+            data: props.cow,
+            targetCow: props.targetCow
         }
         this.choiceGraph=this.choiceGraph.bind(this);
         this.append=this.append.bind(this);
+        this.deleteCow=this.deleteCow.bind(this);
     }
     render(){
         return(
 <div className="passport-container">
        <div className="passport">
-       <img className='endCow' src={exit} />
+       <div className="icons">
+       <img src={minus} onClick={this.deleteCow} className="minusCow" />
+       <img className='endCow' src={exit} /></div>
        <div id="idCow">IDкоровы: <span>{this.state.id}</span></div>
        <div >Имя:<span> {this.state.name}</span></div>
        <div >Порода:<span> {this.state.breed}</span></div>     
@@ -56,6 +61,13 @@ class Passport extends React.Component{
        <button onClick={this.append} >Добавить</button>
         </div>
 </div>)
+    }
+    deleteCow(e){
+        if(!window.confirm("Вы точно хотите удалить корову?")){return}
+        document.getElementsByClassName('backgroundPassport')[0].remove();
+
+        ReactDOM.render(<div></div> , document.getElementById('footer'))  
+this.state.targetCow.remove();
     }
     add(e){
     document.getElementsByClassName('form')[0].style.display='block';
@@ -181,11 +193,16 @@ function formatDate(date) {
     return dd + '.' + mm + '.' + yy;
   }
   function searcParents(id){
-      if(!id){return}
-var tr=document.getElementsByTagName('tr');
+ let tr=document.getElementsByTagName('tr');   
+      if(!id || tr.length<id){return}
+
 tr.filter=[].filter;
-return tr.filter(function(parent){
+let parent = tr.filter(function(parent){
     return parent.getAttribute('data-id')==id
-})[0].children[0].innerText;
+});
+if(parent.length){
+      return parent[0].children[0].innerText
+}
+return ''
   }
 export default Passport;

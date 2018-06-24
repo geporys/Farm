@@ -48,7 +48,7 @@ class Farm extends React.Component{
         context.className="backgroundPassport";
         document.body.appendChild(context);
         document.onclick=function(e){
-        if(e.target.className!="passport-container" && e.target.className!="endCow"){return}
+        if(e.target.className!="passport-container" && e.target.className!="endCow" ){return}
             ReactDOM.render(<div></div> , document.getElementById('footer'))  
             e.target.remove();
             context.remove();
@@ -71,7 +71,7 @@ if(e.target.parentNode.className=='form'){e.target.parentNode.style.display='non
     e.target.remove();
     context.remove();
 };
-ReactDOM.render(<Passport cow={this.state.infocow[target.getAttribute('data-id')]} />, document.getElementById('footer'))
+ReactDOM.render(<Passport cow={this.state.infocow[target.getAttribute('data-id')]} targetCow={target} />, document.getElementById('footer'))
     }
 }
 function createCow(mass, cont){
@@ -100,7 +100,7 @@ class AddCow extends React.Component{
         this.makeCow=this.makeCow.bind(this);    }
     render(){return(<div className="passport-container">
     <div className="windowCow">
-         <img className='endCow' src={exit} />
+         <img className='endCow' src={exit} style={{float:'right', margin:"-20px"}} />
     <div><span>Имя:</span><input type='text' id='name' /></div>
     <div><span>Порода:</span><input type='text' id='breed'/></div>
     <div><span>Масть:</span><input type='text' id='color' /></div>
@@ -116,7 +116,7 @@ class AddCow extends React.Component{
    let     breed=document.getElementById('breed').value;
      let   color=document.getElementById('color').value;
      let id=idCounter();
-       let DOB=document.getElementById('DOB').valueAsDate;
+    let DOB=document.getElementById('DOB').valueAsDate;
        let fatherId=document.getElementById('father').value;
        let motherId=document.getElementById('mother').value;
 let objectCow={
