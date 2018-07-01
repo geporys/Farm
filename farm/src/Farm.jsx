@@ -3,15 +3,9 @@ import Passport from './passport.jsx';
 import ReactDOM from 'react-dom';
 import exit from './img/X.png';
 import './css/farm.css';
+import cows from './Cows.jsx';
 let idCounter=Counter()
-let cows=[
-{name:"Мурка", breed:"Ярославская", color:"Темно-бурая", DOB: new Date(2013, 3, 24), fatherId:"2", motherId:"3", id:idCounter(),graph:{"Надой":['','','','','','',''],"Жирость":['','','','','','',''],"Вес":['','','','','','','']}},
-{name:"Бася", breed:"Холмогорская", color:"Красно-пестрая", DOB: new Date(2005, 7, 21), fatherId:"", motherId:"", id:idCounter(),graph:{"Надой":['','','','','','',''],"Жирость":['','','','','','',''],"Вес":['','','','','','','']} },
-{name:"Муму", breed:"Костромская", color:"Cеро-бурая", DOB: new Date(2003, 4, 3), fatherId:"", motherId:"", id:idCounter(), graph:{"Надой":['','','','','','',''],"Жирость":['','','','','','',''],"Вес":['','','','','','','']}},
-{name:"Муся", breed:"Ярославская ", color:"Темно-бурая", DOB: new Date(2006, 8, 20), id:idCounter(), fatherId:"", motherId:"", graph:{"Надой":[1,'','','','','',''],"Жирость":[23,26,'','','','',''],"Вес":['','','','','','','']}},
-{name:"Дора", breed:"Костромская", color:"Светло-бурая", DOB: new Date(2006, 3, 5), id:idCounter(), fatherId:"", motherId:"", graph:{"Надой":['','','','','','',''],"Жирость":['','','','','','',''],"Вес":['','','','','','','']}},
-{name:"Дор", breed:"Костромская", color:"Светло-бурая", DOB: new Date(2015, 3, 5), id:idCounter(), fatherId:"4", motherId:"5", graph:{"Надой":['','','','','','',''],"Жирость":['','','','','','',''],"Вес":['','','','','','','']}}
-];
+
 class Farm extends React.Component{
     constructor(props){
         super(props);
@@ -38,7 +32,7 @@ class Farm extends React.Component{
 </tbody>
 
 </table>
-<div id="footerTable">  <span className="add" onClick={this.appendCow}>  <button>+</button></span></div>
+<div id="footerTable">  <span  onClick={this.appendCow}>  <button className='add'>+</button></span></div>
   </div>
   
         )
@@ -124,7 +118,7 @@ let objectCow={
     breed,
     color,
     id,
-    DOB,
+    DOB: DOB ? DOB : new Date(),
     fatherId,
      motherId,
     graph:{"Надой":['','','','','','',''],"Жирость":['','','','','','',''],"Вес":['','','','','','','']}
@@ -154,7 +148,7 @@ if(ey==0 || ey>4 || y>10 && y<14){
 }
 }
 function Counter() {
-    var currentCount = 1;
+    var currentCount = 10;
   
     return function() { 
       return currentCount++;

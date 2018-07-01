@@ -1,6 +1,7 @@
 html, body{
     margin:0;
     padding: 0;
+    overflow-x: hidden;
 }
 table{
     width: 1000px;
@@ -82,12 +83,23 @@ border:5px solid #F0F8FF;
 .add{
     float: right;
 }
+.icons{
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100px;
+}
+.icons img{
+    width: 27.25px;
+    height: 26px;
+}
 
-
-.add button{
+.add {
     border-radius: 30px;
-    background: red;
+    background: rgb(101, 240, 101);
    font-size: 18px; 
+   font-weight: 500;
      outline:none;
      text-decoration: none;
 }
@@ -120,22 +132,19 @@ padding: 30px;
     align-self: flex-end;
     height:30px;
 }
-.icons{
-     float: right;
-      margin: -30px;
-      width:110px;
-      display: flex;
-      justify-content: space-around;
-}
 .endCow{
+     float: right;
+      margin: -20px;
     color:red;
     height:30px;
     width: 30px;
 }
+.highcharts-credits{
+    display: none;
+}
 .minusCow{
-    width:36px;
-    height: 36px;
-    margin-top: -3px;
+    width:27.25px;
+    height: 26px;
 }
 .windowCow{
     border:5px solid #F0F8FF;
@@ -150,8 +159,41 @@ padding: 30px;
     justify-content: space-between;
     align-items: center
 }
-
-@media(max-width:1000px){
+.interview{
+    z-index:9010;
+    border:5px solid rgb(194, 227, 255);
+    width: 270px;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: white;
+    position: relative;
+    top:-400px;  
+    min-height: 55px;
+}
+.interview button{
+    width: 55px;
+    height: 27px;
+    padding: 5px;
+    margin: 10px;  
+    float: right;
+}
+.interview span{
+display: block;
+}
+button{
+     background-color: white;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+.backgroundInterview{
+    z-index: 9009;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+@media(max-width:1025px){
     table{
         width:100%;
     }
@@ -162,8 +204,9 @@ padding: 30px;
         margin-right: 20px;
     }
     .passport{
-        width: 70%;
+        width: 50%;
         height: auto;
+       
     }
     #graph{
         width: 100%;
@@ -173,11 +216,55 @@ padding: 30px;
         height: auto;
         
     }
+    
     .windowCow div{
         flex-wrap: wrap;
     }
     .passport-container{
         flex-wrap: wrap;
     }
-    .form{height: auto; margin-top:-10px; }
+    .form{
+        height: auto; 
+        margin-top:-5px;
+     }
+     input{
+         border:2px solid #dadada;
+     }
+}
+@media(max-width:699px){
+    .passport-container{
+        position: absolute;
+    }
+
+    .passport{
+        width: 75%;
+        height: auto; 
+        margin: 15px;
+    }
+    .form{
+        height: 280px;
+        width: 75%;
+        margin: 15px;
+    }
+    .form button{
+        margin-top: 20px;
+    }
+    .icons{
+        margin-top:30px;
+    }
+    #father, #mather{
+        margin: 8px;
+    }
+    select{
+        background-color: white;
+        border-width: 1px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    border-width: 1px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    
+    }
 }

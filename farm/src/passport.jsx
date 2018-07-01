@@ -2,6 +2,7 @@ import React from 'react';
 import Highcharts from 'highcharts';
 import exit from './img/X.png';
 import minus from './img/minus.png';
+import refresh from './img/refresh.png';
 import ReactDOM from 'react-dom';
 class Passport extends React.Component{
     constructor(props){
@@ -18,15 +19,15 @@ class Passport extends React.Component{
         }
         this.choiceGraph=this.choiceGraph.bind(this);
         this.append=this.append.bind(this);
+        this.add=this.add.bind(this);
         this.deleteCow=this.deleteCow.bind(this);
+        this.refreshWeek=this.refreshWeek.bind(this);
     }
     render(){
         return(
 <div className="passport-container">
        <div className="passport">
-       <div className="icons">
-       <img src={minus} onClick={this.deleteCow} className="minusCow" />
-       <img className='endCow' src={exit} /></div>
+       <img className='endCow' src={exit} />
        <div id="idCow">IDкоровы: <span>{this.state.id}</span></div>
        <div >Имя:<span> {this.state.name}</span></div>
        <div >Порода:<span> {this.state.breed}</span></div>     
@@ -41,7 +42,10 @@ class Passport extends React.Component{
                  <button>Вес</button>
                  
              </span>
-            <span className="add" onClick={this.add}>  <button>+</button></span>
+            <span className="icons" ><img src={minus} onClick={this.deleteCow} className="minusCow" /> 
+            <img src={refresh} onClick={this.refreshWeek} /> 
+            <button className='add' onClick={this.add} >+</button></span>
+            
         </div>
        </div>
        <div className='form'>
@@ -55,7 +59,7 @@ class Passport extends React.Component{
                         <option>Сб</option>
                         <option>Вс</option>
                       </select></div>
-       <div><span>Надой:</span>  <span><input type="text" id="squeezed" />  л.</span></div>
+       <div><span>Надой:</span>  <span><input type="text" id="squeezed"  />  л.</span></div>
        <div><span>Жирность:</span><span><input type="text" id="fat" /> %</span></div>
        <div><span>Вес:</span><span><input type="text" id="weight" /> кг</span></div>
        <button onClick={this.append} >Добавить</button>
@@ -63,32 +67,55 @@ class Passport extends React.Component{
 </div>)
     }
     deleteCow(e){
-        if(!window.confirm("Вы точно хотите удалить корову?")){return}
-        document.getElementsByClassName('backgroundPassport')[0].remove();
+        cullingSurvey('Вы точно хотите удалить корову?',(function(){
+            document.getElementsByClassName('backgroundPassport')[0].remove();
 
-        ReactDOM.render(<div></div> , document.getElementById('footer'))  
+       ReactDOM.render(<div></div> , document.getElementById('footer'))  
 this.state.targetCow.remove();
+        }).bind(this))
     }
     add(e){
     document.getElementsByClassName('form')[0].style.display='block';
+document.getElementById('squeezed').autofocus=true;
     }
 
     append(e){
+        
         let day=document.getElementsByTagName('select')[0].selectedIndex;
         let squeezed=this.state.data.graph['Надой'];
+        let squeez=+document.getElementById("squeezed").value;
+        let fat=+document.getElementById("fat").value;
+        let weight=+document.getElementById("weight").value;
         for(let i=day;i<7;i++){
 if(squeezed[i])
-{if(window.confirm("Вы хотите обновить неделю?")){this.state.data.graph["Надой"]=['','','','','','','']; this.state.data.graph["Жирость"]=['','','','','','','']; this.state.data.graph["Вес"]=['','','','','','','']; break;}       
-else{break;}}
+{cullingSurvey('Вы точно хотите обновить неделю?',(function(day, squeez, fat, weight)
+{this.state.data.graph["Надой"]=['','','','','','','']; this.state.data.graph["Жирость"]=['','','','','','',''];
+ this.state.data.graph["Вес"]=['','','','','','','']; 
+this.state.data.graph['Надой'][day]=squeez;
+ this.state.data.graph['Жирость'][day]=fat;
+ this.state.data.graph['Вес'][day]=weight;
+ staticGrap(this);   }).bind(this,day,squeez,fat,weight)); break;  }
 }
         
-        this.state.data.graph['Надой'][day]=+document.getElementById("squeezed").value;
-        this.state.data.graph['Жирость'][day]=+document.getElementById("fat").value;
-        this.state.data.graph['Вес'][day]=+document.getElementById("weight").value;
+        this.state.data.graph['Надой'][day]=squeez;
+        this.state.data.graph['Жирость'][day]=fat;
+        this.state.data.graph['Вес'][day]=weight;
         staticGrap(this);
         document.getElementById("squeezed").value='';
         document.getElementById("fat").value='';
         document.getElementById("weight").value='';
+       let select=document.getElementsByTagName('select')[0];
+        select.childNodes[select.selectedIndex+1 < 7 ? select.selectedIndex+1 : 0].selected=true;
+        document.getElementById('squeezed').focus();
+        var xhr = new XMLHttpRequest();
+
+        var json = JSON.stringify(this.state.data);
+        
+        xhr.open("POST", 'http://localhost:3001', true)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        
+        
+        xhr.send(json);
     }
     choiceGraph(e){
 let target=e.target;
@@ -131,9 +158,14 @@ Highcharts.chart('graph', {
 
 });
     }
+    refreshWeek(){
+        cullingSurvey('Вы точно хотите обновить неделю?',(function()
+        {this.state.data.graph["Надой"]=['','','','','','','']; this.state.data.graph["Жирость"]=['','','','','','',''];
+         this.state.data.graph["Вес"]=['','','','','','','']; staticGrap(this)  }).bind(this))      
+           
+    }
     componentDidMount(){
         staticGrap(this);
-
     }
    
     }
@@ -205,4 +237,33 @@ if(parent.length){
 }
 return ''
   }
+  function cullingSurvey(text, func){
+      let background=document.createElement('div');
+      background.className="backgroundInterview";
+      document.body.appendChild(background);
+      background.onclick=function(){
+          return false;
+      }
+    let wind=document.createElement('div');
+      wind.className="interview";
+      let spantext=document.createElement('span');
+      spantext.innerText=text;
+      wind.appendChild(spantext);
+      let yes=document.createElement('button');
+      yes.innerText='Да';
+      let no=document.createElement('button');
+      no.innerText='Нет';
+      wind.appendChild(yes);
+      wind.appendChild(no)
+      document.body.appendChild(wind);
+yes.onclick=function(){
+    func();
+    background.remove();
+    wind.remove();
+}
+no.onclick=function(){
+    background.remove();
+    wind.remove();
+}
+}
 export default Passport;
