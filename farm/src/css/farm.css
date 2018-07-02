@@ -166,8 +166,7 @@ padding: 30px;
     padding: 20px;
     margin: 0 auto;
     background-color: white;
-    position: relative;
-    top:-400px;  
+    position: relative; 
     min-height: 55px;
 }
 .interview button{
@@ -230,6 +229,21 @@ button{
      input{
          border:2px solid #dadada;
      }
+       select{
+        background-color: white;
+        border-width: 1px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    border-width: 1px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    
+    }
+    .icons{
+        margin-top:30px;
+    }
 }
 @media(max-width:699px){
     .passport-container{
@@ -249,22 +263,9 @@ button{
     .form button{
         margin-top: 20px;
     }
-    .icons{
-        margin-top:30px;
-    }
+    
     #father, #mather{
         margin: 8px;
     }
-    select{
-        background-color: white;
-        border-width: 1px;
-    border-style: solid;
-    border-color: initial;
-    border-image: initial;
-    border-width: 1px;
-    border-style: solid;
-    border-color: initial;
-    border-image: initial;
-    
-    }
+  
 }

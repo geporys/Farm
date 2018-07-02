@@ -91,15 +91,15 @@ if(squeezed[i])
 {cullingSurvey('Вы точно хотите обновить неделю?',(function(day, squeez, fat, weight)
 {this.state.data.graph["Надой"]=['','','','','','','']; this.state.data.graph["Жирость"]=['','','','','','',''];
  this.state.data.graph["Вес"]=['','','','','','','']; 
-this.state.data.graph['Надой'][day]=squeez;
- this.state.data.graph['Жирость'][day]=fat;
- this.state.data.graph['Вес'][day]=weight;
+this.state.data.graph['Надой'][day]=squeez ? squeez : this.state.data.graph['Надой'][day];
+ this.state.data.graph['Жирость'][day]=fat ? fat : this.state.data.graph['Жирость'][day];
+ this.state.data.graph['Вес'][day]=weight ? weight : this.state.data.graph['Вес'][day];
  staticGrap(this);   }).bind(this,day,squeez,fat,weight)); break;  }
 }
         
-        this.state.data.graph['Надой'][day]=squeez;
-        this.state.data.graph['Жирость'][day]=fat;
-        this.state.data.graph['Вес'][day]=weight;
+        this.state.data.graph['Надой'][day]=squeez ? squeez : this.state.data.graph['Надой'][day];
+        this.state.data.graph['Жирость'][day]=fat ? fat :   this.state.data.graph['Жирость'][day];
+        this.state.data.graph['Вес'][day]=weight ? weight : this.state.data.graph['Вес'][day];
         staticGrap(this);
         document.getElementById("squeezed").value='';
         document.getElementById("fat").value='';
@@ -107,9 +107,21 @@ this.state.data.graph['Надой'][day]=squeez;
        let select=document.getElementsByTagName('select')[0];
         select.childNodes[select.selectedIndex+1 < 7 ? select.selectedIndex+1 : 0].selected=true;
         document.getElementById('squeezed').focus();
+        let dateCow=new Date();
+        day++;
+        day=dateCow.getDay()==0 ? day-7 : day-dateCow.getDay();
+       
+        dateCow.setDate(dateCow.getDate()+day);
         var xhr = new XMLHttpRequest();
 
-        var json = JSON.stringify(this.state.data);
+        var json = JSON.stringify({
+            name: this.state.name,
+            id: this.state.id,
+            date: formatDate(dateCow),
+            squeez,
+            fat,
+            weight
+        });
         
         xhr.open("POST", 'http://localhost:3001', true)
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -245,6 +257,7 @@ return ''
           return false;
       }
     let wind=document.createElement('div');
+    wind.style.top=-document.getElementsByTagName('tbody')[0].offsetHeight+'px';
       wind.className="interview";
       let spantext=document.createElement('span');
       spantext.innerText=text;
